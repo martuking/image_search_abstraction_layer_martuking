@@ -8,7 +8,7 @@ var Bing = require('node-bing-api')({ accKey: process.env.AZURE_KEY_2 });
 app.use(bodyParser.json());
 app.use(cors());
 mongoose.connect(process.env.MONGO_URI);
-//usage /db?term=something%offset=number
+//usage /db?term=something&offset=number
 app.get('/db?', function(
   request,
   response,
@@ -41,7 +41,7 @@ app.get('/bing?',function(request,response,next){
   count: off,   // Number of results (max 50) 
   offset: 0    // Skip first 0 result 
   }, function(error, res, body){
-    return response.send(body)
+    return response.send(body.value)
   });
 });
 
