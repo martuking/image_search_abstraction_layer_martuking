@@ -32,7 +32,7 @@ app.get('/db?', function(
     }
   });
 });
-//usage /bing?q=something%off=number
+//usage /bing?q=something&off=number
 app.get('/bing?',function(request,response,next){
   var q = request.query.q;
   var off = request.query.off
