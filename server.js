@@ -8,13 +8,13 @@ var Bing = require('node-bing-api')({ accKey: process.env.AZURE_KEY_2 });
 app.use(bodyParser.json());
 app.use(cors());
 mongoose.connect(process.env.MONGO_URI);
-//usage /db?term=something&offset=number
+//usage /db?q=something&offset=number
 app.get('/db?', function(
   request,
   response,
   next
 ) {
-  var st = request.query.term;
+  var st = request.query.q;
   var off = request.query.off;
   var data = new db_object({
     searchterm: st,
