@@ -14,10 +14,10 @@ app.get('/db?', function(
   response,
   next
 ) {
-  var st = request.query.q;
+  var q = request.query.q;
   var off = request.query.off;
   var data = new db_object({
-    searchterm: st,
+    searchterm: q,
     offset: off 
   });
   data.save(function(err) {
@@ -37,6 +37,21 @@ app.get("/bing?", function(request, response, next) {
   var q = request.query.q;
   var off = request.query.off;
   var list = [];
+   var data = new db_object({
+    searchterm: q,
+    offset: off 
+  });
+  data.save(function(err) {
+    if (err) {
+      return response.send(
+        "An error occurred while saving data in the database"
+      );
+    }
+    else {
+      //response.send('your search request was correctly saved');
+      return response.json(data);
+    }
+  });
   //console.log(q);
   Bing.images(
     q,
@@ -52,9 +67,9 @@ app.get("/bing?", function(request, response, next) {
           host: body.value[i]["hostPageUrl"],
           thumbnail: body.value[i]["thumbnailUrl"]
         });
-        list.append(obj);
+        list.push(obj);
       }
-      return response.json(obj);
+      return response.send(list);
       //return response.json(body);
     }
   );
