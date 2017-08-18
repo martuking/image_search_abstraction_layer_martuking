@@ -41,7 +41,7 @@ app.get('/bing?',function(request,response,next){
   count: off,   // Number of results (max 50) 
   offset: 0    // Skip first 0 result 
   }, function(error, res, body){
-    return response.send(body.value)
+    return response.send(body.value.name,body.value.thumbnailUrl,body.value.hostPageUrl,body.value.contentUrl)
   });
 });
 
