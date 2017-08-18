@@ -33,21 +33,20 @@ app.get('/db?', function(
   });
 });
 //usage /bing?q=something&off=number
-app.get("/bing?", function(request, response, next) {
+app.get("/search?", function(request, response, next) {
   var q = request.query.q;
   var off = request.query.off;
   var list = [];
-   var data = new db_object({
+  var data = new db_object({
     searchterm: q,
-    offset: off 
+    offset: off
   });
   data.save(function(err) {
     if (err) {
       return response.send(
         "An error occurred while saving data in the database"
       );
-    }
-    else {
+    } else {
       //response.send('your search request was correctly saved');
       return response.json(data);
     }
@@ -74,6 +73,7 @@ app.get("/bing?", function(request, response, next) {
     }
   );
 });
+
 
 
 
