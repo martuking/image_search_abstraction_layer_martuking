@@ -33,20 +33,34 @@ app.get('/db?', function(
   });
 });
 //usage /bing?q=something&off=number
-app.get('/bing?',function(request,response,next){
+app.get("/bing?", function(request, response, next) {
   var q = request.query.q;
-  var off = request.query.off
-  console.log(q);
-  Bing.images(q, {
-  count: off,   // Number of results (max 50) 
-  offset: 0    // Skip first 0 result 
-  }, function(error, res, body){
-    var obj = new Object(
-    
-    );
-    return response.json(body);
-  });
+  var off = request.query.off;
+  var list = [];
+  //console.log(q);
+  Bing.images(
+    q,
+    {
+      count: off, // Number of results (max 50)
+      offset: 0 // Skip first 0 result
+    },
+    function(error, res, body) {
+      for (var i = 0; i < off; i++) {
+        var obj = new Object({
+          name: body.value[i]["name"],
+          content: body.value[i]["contentUrl"],
+          host: body.value[i]["hostPageUrl"],
+          thumbnail: body.value[i]["thumbnailUrl"]
+        });
+        list.append(obj);
+      }
+      return response.json(obj);
+      //return response.json(body);
+    }
+  );
 });
+
+
 
 
 // listen for requests :)
