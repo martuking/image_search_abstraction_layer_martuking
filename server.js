@@ -32,7 +32,7 @@ app.get('/db?', function(
     }
   });
 });
-//usage /bing?q=something&off=number
+//usage /search?q=something&off=number
 app.get("/search?", function(request, response, next) {
   var q = request.query.q;
   var off = request.query.off;
@@ -73,6 +73,16 @@ app.get("/search?", function(request, response, next) {
     }
   );
 });
+//usage/show
+app.get("/show", function(request, response, next) {
+  db_object.find(function(err, data) {
+    if (err) {
+      return response.send("An error occurred");
+    }
+    response.json(data);
+  });
+});
+
 
 
 
